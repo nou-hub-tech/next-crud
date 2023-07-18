@@ -2,7 +2,7 @@ export default function GithubCorner() {
   return (
     <div className="relative">
       <a
-        href="https://github.com/patricklemmer/nextjs-crud"
+        href="https://github.com/nou-hub-tech/next-crud"
         className="github-corner absolute top-0 right-0"
         aria-label="View source on GitHub"
         target={'_blank'}

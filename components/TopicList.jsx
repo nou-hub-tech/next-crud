@@ -2,11 +2,19 @@
 // Component imports
 import RemoveButton from './RemoveButton';
 import EditButton from './EditButton';
+import { headers } from 'next/headers';
+
+const getBaseUrl = () => {
+  const headerList = headers();
+  const host = headerList.get('host');
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  return `${protocol}://${host}`;
+};
 
 const getTopics = async () => {
-  const apiUrl = process.env.API_URL;
   try {
-    const res = await fetch(`${apiUrl}/api/topics`, {
+    const res = await fetch(`${getBaseUrl()}/api/topics`, {
       cache: 'no-store',
     });
 
@@ -17,11 +25,12 @@ const getTopics = async () => {
     return res.json();
   } catch (error) {
     console.log('Error fetching topics: ', error);
+    return { topics: [] };
   }
 };
 
 export default async function TopicList() {
-  const { topics } = await getTopics();
+  const { topics = [] } = (await getTopics()) ?? {};
 
   return (
     <>
